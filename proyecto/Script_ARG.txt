@@ -5,14 +5,7 @@ docker network create --driver bridge --subnet 192.168.100.0/24 mi_red
 docker volume create mysql_data
 
 
-docker run -d ^
---name mysql_db ^
---network mi_red ^
---ip 192.168.100.10 ^
--e MYSQL_ROOT_PASSWORD=123456 ^
--v mysql_data:/var/lib/mysql ^
--v %cd%/init.sql:/docker-entrypoint-initdb.d/init.sql ^
-mysql
+docker run -d --name mysql_db --network mi_red --ip 192.168.100.10 -e MYSQL_ROOT_PASSWORD=123456 -v mysql_data:/var/lib/mysql -v %cd%/init.sql:/docker-entrypoint-initdb.d/init.sql mysql
 
 
 docker build -t app_arg --build-arg APP_TYPE=node -f Dockerfile.arg .
