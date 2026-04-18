@@ -9,7 +9,7 @@ docker run -d ^
 --ip 192.168.100.10 ^
 -e MYSQL_ROOT_PASSWORD=123456 ^
 -v mysql_data:/var/lib/mysql ^
--v %cd%/init.sql:/docker-entrypoint-initdb.d/init.sql ^
+-v %cd%\db\init.sql:/docker-entrypoint-initdb.d/init.sql ^
 mysql
 
 docker build -t app_env -f Dockerfile.env .
