@@ -1,0 +1,19 @@
+
+FROM node:18-alpine
+WORKDIR /app
+COPY node/ .
+RUN npm install
+
+
+FROM python:3.10-alpine
+WORKDIR /app
+COPY python/ 
+RUN pip install -r requirements.txt
+
+ARG APP_TYPE=node
+
+FROM ${APP_TYPE}
+
+WORKDIR /app
+
+CMD ["sh", "-c", "if [ \"$APP_TYPE\" = \"node\" ]; then node index.js; else python app.py; fi"]

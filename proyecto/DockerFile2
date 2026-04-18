@@ -1,0 +1,18 @@
+FROM node:18
+
+WORKDIR /app
+
+COPY node/ ./node
+COPY python/ ./python
+
+RUN apt-get update && apt-get install -y python3 python3-pip
+
+
+RUN pip3 install -r python/requirements.txt
+RUN cd node && npm install
+
+
+ENV APP_TYPE=node
+
+
+CMD ["sh", "-c", "if [ \"$APP_TYPE\" = \"node\" ]; then cd node && node index.js; else cd python && python3 app.py; fi"]
